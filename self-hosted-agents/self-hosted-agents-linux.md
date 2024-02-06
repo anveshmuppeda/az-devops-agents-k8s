@@ -7,35 +7,35 @@
 ### Step 2 - Download the agent  
 ```wget https://vstsagentpackage.azureedge.net/agent/2.214.1/vsts-agent-linux-x64-2.214.1.tar.gz  ```
 
-### Step #3 - Configure the Agent   
+### Step 3 - Configure the Agent   
 
 ```tar zxvf vsts-agent-linux-x64-2.214.1.tar.gz  ```   
 
 List the files in the directory after extracting.  
 ```ls -al```  
 
-### Step #4:  
+### Step 4:  
 Run the below command:  
 ```./config.sh```
 
-### Step #5:  
+### Step 5:  
 Enter server URL >  
 ```https://dev.azure.com/yourorganization```  
 
-### Step #6:  
+### Step 6:  
 Enter authentication type (press enter for PAT) > PAT  
 
-### Step #7:  
+### Step 7:  
 Enter personal access token, generated from this step  
 
-### Step #8:  
+### Step 8:  
 Enter Agent pool  
 Give some name  
 
-### Step #9:  
+### Step 9:  
 Enter Agent name --> myBuildAgent_1  
 
-### Step #10:  
+### Step 10:  
 Enter work folder > enter  
 
 that's it agent is successfully configured.  
