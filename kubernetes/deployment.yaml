@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: azdevops-deployment
+  namespace: az-devops
   labels:
     app: azdevops-agent
 spec:
