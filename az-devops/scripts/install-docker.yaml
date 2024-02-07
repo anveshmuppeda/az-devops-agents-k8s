@@ -1,0 +1,7 @@
+steps:
+    -   bash: |
+            echo "Installing Docker CLI"
+            #curl -fsSL https://get.docker.com/ | sh
+            #sudo usermod -aG docker root
+        displayName: 'Install Docker CLI'
+        

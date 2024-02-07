@@ -1,0 +1,5 @@
+steps:
+    -   bash: |
+            echo "Pushing Docker image"
+            sudo docker push anvesh35/azsh-linux-agent:02062024
+        displayName: 'Pushing the Docker Image'

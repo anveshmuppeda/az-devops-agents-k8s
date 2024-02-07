@@ -1,0 +1,41 @@
+trigger: none
+
+pool: docker-self-hosted-agent
+
+resources:
+  repositories:
+    - repository: templates
+      displayname: templates from devops
+      type: git
+      name: selfhosted-agents-kubernetes/selfhosted-agents-on-k8s
+      ref: main
+
+stages:
+- stage: Deploy
+  jobs:
+  - deployment: agentSetup
+    environment: test
+    displayName: 'Agent Setup'
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+            - checkout: self
+              persistCredentials: true
+            
+            # Az CLI Installation
+            - template: /scripts/install-az-cli.yaml@templates
+            
+            # Docker Installation
+            - template: ../scripts/install-docker.yaml
+            
+            #Sample docker run
+            - template: ../scripts/docker-run.yaml
+
+            #Sample run on Azure CLI
+            - task: AzureCLI@2
+              inputs:
+                azureSubscription: 'az-devops-selfhosted-agents-service-connection'
+                scriptType: 'bash'
+                scriptLocation: 'inlineScript'
+                inlineScript: 'echo "Hello, welcome to Anvesh World!"'

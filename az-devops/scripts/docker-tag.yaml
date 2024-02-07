@@ -1,0 +1,5 @@
+steps:
+    -   bash: |
+            echo "Tag Docker image"
+            sudo docker tag az-sh-linux-agent:02062024 anvesh35/azsh-linux-agent:02062024
+        displayName: 'Tagging the Docker Image'

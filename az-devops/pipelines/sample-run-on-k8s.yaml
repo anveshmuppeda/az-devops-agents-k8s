@@ -1,0 +1,28 @@
+trigger: none
+
+pool: agent-on-kubernetes
+
+resources:
+  repositories:
+    - repository: templates
+      displayname: templates from devops
+      type: git
+      name: selfhosted-agents-kubernetes/selfhosted-agents-on-k8s
+      ref: main
+
+stages:
+- stage: Deploy
+  jobs:
+  - deployment: agentSetup
+    environment: test
+    displayName: 'Agent Setup'
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+            #Branch Checkout
+            - checkout: self
+              persistCredentials: true
+            
+            # Hello World program
+            - template: /scripts/kubernetes/hello-world.yaml@templates

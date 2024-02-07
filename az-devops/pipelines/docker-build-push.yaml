@@ -1,0 +1,34 @@
+trigger: none
+
+pool: docker-self-hosted-agent
+
+resources:
+  repositories:
+    - repository: templates
+      displayname: templates from devops
+      type: git
+      name: selfhosted-agents-kubernetes/selfhosted-agents-on-k8s
+      ref: main
+
+stages:
+- stage: Deploy
+  jobs:
+  - deployment: dockerBuildPush
+    environment: test
+    displayName: 'Build & Push'
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+            - checkout: self
+              persistCredentials: true
+            
+            # Docker Image Build
+            - template: scripts/docker-build.yaml@templates
+            
+            # Docker Image Tag
+            - template: scripts/docker-tag.yaml@templates
+            
+            # Docker Image Push 
+            - template: scripts/docker-push.yaml@templates
+            

@@ -1,0 +1,8 @@
+steps:
+    -   bash: |
+            echo "Run Hello World"
+            sudo docker run hello-world
+            cat $(Build.SourcesDirectory)/scripts/install-az-cli.yaml
+            ls -lrta
+            pwd
+        displayName: 'Running Docker Commands'
