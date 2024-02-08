@@ -1,6 +1,6 @@
 # Azure DevOps  
 
-## Self Hosted Agents on Kubernetes   
+## Self Hosted Agents on Kubernetes   [![GitHub](https://img.shields.io/github/license/anveshmuppeda/az-devops-agents-k8s?color=blue)](https://github.com/anveshmuppeda/az-devops-agents-k8s/blob/main/LICENSE)
 
 Are you tired of wrestling with manual agent management, lengthy pipeline queues, or soaring infrastructure costs in your Azure DevOps setup? Look no further! In this comprehensive series of guides, we’ll explore how leveraging Kubernetes for self-hosted agents can revolutionize your CI/CD processes. Say goodbye to operational headaches and hello to streamlined, efficient pipelines.  
 If you find yourself grappling with the management of Azure DevOps self-hosted agents or experiencing prolonged wait times in pipeline queues, or perhaps facing higher costs associated with agent infrastructure, or struggling with the setup and maintenance of self-hosted agent environments, then Kubernetes presents an optimal solution to address these challenges.  
