@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azdevops-deployment
+  name: azsh-linux
   namespace: az-devops
   labels:
-    app: azdevops-agent
+    app: azsh-linux-agent
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: azdevops-agent
+      app: azsh-linux-agent
   template:
     metadata:
       labels:
-        app: azdevops-agent
+        app: azsh-linux-agent
     spec:
       containers:
       - name: kubepodcreation
