@@ -23,5 +23,17 @@ If your changes include any visual modifications, please include screenshots her
 - [ ] I have added tests (if applicable).
 - [ ] I have squashed my commits into a single coherent set of changes.
 
-## Additional Notes
-Add any additional information or context that might be helpful for the reviewer.
+{% if branch_name == 'main' %}
+## Additional Instructions for Main Branch
+Add any additional instructions specific to mian branches here.
+{% endif %}
+
+{% if branch_name == 'qa' %}
+## Additional Instructions for QA Branch
+Add any additional instructions specific to qa branches here.
+{% endif %}
+
+{% if branch_name == 'documentation-branch' %}
+## Additional Instructions for Documentation Branch
+Add any additional instructions specific to documentation branches here.
+{% endif %}
