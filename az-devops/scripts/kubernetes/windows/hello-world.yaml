@@ -1,0 +1,5 @@
+steps:
+  - task: CmdLine@2
+    displayName: 'Run Hello World'
+    inputs:
+      script: 'echo Hello, World!'

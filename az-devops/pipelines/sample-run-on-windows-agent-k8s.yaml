@@ -1,0 +1,21 @@
+trigger: none
+
+pool: 
+  name: agent-on-kubernetes
+  vmImage: azsh-windows-768bd8bdf8-2ng48
+
+stages:
+- stage: Deploy
+  jobs:
+  - deployment: agentSetup
+    environment: test
+    displayName: 'Agent Setup'
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+            #Hello World From CMDLINE
+            - template: ../scripts/kubernetes/windows/hello-world.yaml
+            
+            #Print Hostname from CMDLINE
+            - template: ../scripts/kubernetes/windows/windows-hostname.yaml
