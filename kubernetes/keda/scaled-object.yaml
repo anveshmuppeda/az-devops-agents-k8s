@@ -1,0 +1,17 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: azure-pipelines-scaledobject
+  namespace: az-devops
+spec:
+  scaleTargetRef:
+    name: azsh-linux
+  minReplicaCount: 1
+  maxReplicaCount: 5 #Maximum number of parallel instances
+  triggers:
+  - type: azure-pipelines
+    metadata:
+      poolID: "14" #Replace with your agent pool ID
+      organizationURLFromEnv: "AZP_URL"
+    authenticationRef:
+     name: pipeline-trigger-auth
