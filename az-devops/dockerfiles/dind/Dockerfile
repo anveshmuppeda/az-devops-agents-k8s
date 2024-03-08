@@ -45,4 +45,11 @@ ENV AGENT_ALLOW_RUNASROOT="true"
 EXPOSE 22
 
 # Set systemd as entrypoint.
-ENTRYPOINT [ "/sbin/init", "--log-level=err" ]
+#ENTRYPOINT [ "/sbin/init", "--log-level=err" ]
+
+# Run start.sh script by default
+#CMD ["./start.sh"]
+# Start systemd and run start.sh script
+CMD ["/bin/bash", "-c", "/sbin/init --log-level=err && /azp/start.sh"]
+
+#CMD ["/bin/bash", "-c", "/sbin/init --log-level=err && ./start.sh"]
