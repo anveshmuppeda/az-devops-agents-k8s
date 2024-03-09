@@ -50,6 +50,13 @@ EXPOSE 22
 # Run start.sh script by default
 #CMD ["./start.sh"]
 # Start systemd and run start.sh script
-CMD ["/bin/bash", "-c", "/sbin/init --log-level=err && /azp/start.sh"]
+#CMD ["/bin/bash", "-c", "/sbin/init --log-level=err && /azp/start.sh"]
 
 #CMD ["/bin/bash", "-c", "/sbin/init --log-level=err && ./start.sh"]
+
+
+# Set start.sh script as ENTRYPOINT.
+ENTRYPOINT ["/azp/start.sh"]
+
+# Initialize systemd and start.sh script with CMD.
+CMD ["/bin/bash", "-c", "/sbin/init --log-level=err"]
