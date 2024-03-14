@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syscont-deployment
+  labels:
+    app: syscont
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: syscont
+  template:
+    metadata:
+      labels:
+        app: syscont
+      annotations:
+        io.kubernetes.cri-o.userns-mode: "auto:size=65536"
+    spec:
+      runtimeClassName: sysbox-runc
+      containers:
+      - name: ubu-bio-systemd-docker
+        #image: registry.nestybox.com/nestybox/ubuntu-bionic-systemd-docker
+        image: anvesh35/azsh-dind-agent:v2.0.0
+        command: ["/sbin/init"]

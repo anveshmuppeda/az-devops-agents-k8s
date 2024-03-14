@@ -1,23 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azsh-linux
+  name: azsh-dind
   namespace: az-devops
   labels:
-    app: azsh-linux-agent
+    app: azsh-dind-agent
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: azsh-linux-agent
+      app: azsh-dind-agent
   template:
     metadata:
       labels:
-        app: azsh-linux-agent
+        app: azsh-dind-agent
+      annotations:
+        io.kubernetes.cri-o.userns-mode: "auto:size=65536"
     spec:
+      runtimeClassName: sysbox-runc
       containers:
-      - name: kubepodcreation
-        image: anvesh35/azsh-linux-agent:02062024
+      - name: dind
+        image: anvesh35/azsh-dind-agent
+        command: ["/azp/start.sh"]
         env:
           - name: AZP_URL
             valueFrom:
@@ -34,10 +38,3 @@ spec:
               secretKeyRef:
                 name: azdevops
                 key: AZP_POOL
-        volumeMounts:
-        - mountPath: /var/run/docker.sock
-          name: docker-volume
-      volumes:
-      - name: docker-volume
-        hostPath:
-          path: /var/run/docker.sock
