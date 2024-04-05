@@ -1,0 +1,51 @@
+{{- if .Values.windows.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.windows.deploy.name }}
+  namespace: az-devops
+  labels:
+    app: azsh-windows-agent
+    {{- include "az-selfhosted-agents.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.windows.deploy.replicas }}
+  selector:
+    matchLabels:
+      app: azsh-windows-agent
+      {{- include "az-selfhosted-agents.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: azsh-windows-agent
+        {{- include "az-selfhosted-agents.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Values.windows.deploy.container.name }}
+        image: {{ .Values.windows.deploy.container.image }}
+        imagePullPolicy: {{ .Values.windows.deploy.container.pullPolicy }}
+        resources:
+            {{- toYaml .Values.windows.deploy.container.resources | nindent 12 }}
+        env:
+          - name: AZP_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: AZP_URL
+          - name: AZP_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: AZP_TOKEN
+          - name: AZP_POOL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: AZP_POOL
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: docker-volume
+      volumes:
+      - name: docker-volume
+        hostPath:
+          path: /var/run/docker.sock
+{{ end }}

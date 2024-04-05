@@ -1,0 +1,50 @@
+{{- if .Values.linux.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.linux.deploy.name }}
+  labels:
+    app: azsh-linux-agent
+    {{- include "az-selfhosted-agents.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.linux.deploy.replicas }}
+  selector:
+    matchLabels:
+      app: azsh-linux-agent
+      {{- include "az-selfhosted-agents.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "az-selfhosted-agents.selectorLabels" . | nindent 8 }}
+        app: azsh-linux-agent
+    spec:
+      containers:
+      - name: {{ .Values.linux.deploy.container.name }}
+        image: {{ .Values.linux.deploy.container.image }}
+        imagePullPolicy: {{ .Values.linux.deploy.container.pullPolicy }}
+        resources:
+            {{- toYaml .Values.linux.deploy.container.resources | nindent 12 }}
+        env:
+          - name: AZP_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: AZP_URL
+          - name: AZP_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: AZP_TOKEN
+          - name: AZP_POOL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: AZP_POOL
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: docker-volume
+      volumes:
+      - name: docker-volume
+        hostPath:
+          path: /var/run/docker.sock
+{{ end }}

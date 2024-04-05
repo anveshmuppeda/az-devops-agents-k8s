@@ -1,0 +1,99 @@
+# Default values for az-selfhosted-agents.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Secret values which will be used to connect to Azure DevOps
+secret:
+  name: azdevops
+  data:
+    AZP_POOL_VALUE: YWdlbnQtb24ta3ViZXJuZXRlcw==
+    AZP_TOKEN_VALUE: VE9LRU5fVkFMVUU9PQ==
+    AZP_URL_VALUE: VE9LRU5fVkFMVUU9PQ==
+
+# Configuration for Linux Self-Hosted agents
+linux:
+  enabled: false
+  deploy:
+    name: azsh-linux-agent
+    replicas: 1
+    container:
+      name: linux-agent
+      image: anvesh35/azsh-linux-agent:02062024
+      pullPolicy: IfNotPresent
+      resources: {}
+        # We usually recommend not to specify default resources and to leave this as a conscious
+        # choice for the user. This also increases chances charts run on environments with little
+        # resources, such as Minikube. If you do want to specify resources, uncomment the following
+        # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+        # limits:
+        #   cpu: 100m
+        #   memory: 128Mi
+        # requests:
+        #   cpu: 100m
+        #   memory: 128Mi
+
+# Configuration for Windows Self-Hosted agents
+windows:
+  enabled: false
+  deploy:
+    name: azsh-windows-agent
+    replicas: 1
+    container:
+      name: windows-agent
+      image: anvesh35/azsh-windows-agent:1602204
+      pullPolicy: IfNotPresent
+      resources: {}
+        # We usually recommend not to specify default resources and to leave this as a conscious
+        # choice for the user. This also increases chances charts run on environments with little
+        # resources, such as Minikube. If you do want to specify resources, uncomment the following
+        # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+        # limits:
+        #   cpu: 100m
+        #   memory: 128Mi
+        # requests:
+        #   cpu: 100m
+        #   memory: 128Mi
+
+# Configuration for Docker-in-Docker(DinD) Self-Hosted agents
+dind:
+  enabled: false
+  deploy:
+    name: azsh-dind-agent
+    replicas: 1
+    container:
+      name: dind-agent
+      image: anvesh35/azsh-dind-agent
+      pullPolicy: IfNotPresent
+      resources: {}
+        # We usually recommend not to specify default resources and to leave this as a conscious
+        # choice for the user. This also increases chances charts run on environments with little
+        # resources, such as Minikube. If you do want to specify resources, uncomment the following
+        # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+        # limits:
+        #   cpu: 100m
+        #   memory: 128Mi
+        # requests:
+        #   cpu: 100m
+        #   memory: 128Mi
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

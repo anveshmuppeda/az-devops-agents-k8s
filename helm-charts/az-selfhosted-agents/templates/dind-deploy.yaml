@@ -1,0 +1,48 @@
+{{- if .Values.dind.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.dind.deploy.name }}
+  namespace: az-devops
+  labels:
+    app: azsh-dind-agent
+    {{- include "az-selfhosted-agents.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.dind.deploy.replicas }}
+  selector:
+    matchLabels:
+      app: azsh-dind-agent
+      {{- include "az-selfhosted-agents.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: azsh-dind-agent
+        {{- include "az-selfhosted-agents.selectorLabels" . | nindent 8 }}
+      annotations:
+        io.kubernetes.cri-o.userns-mode: "auto:size=65536"
+    spec:
+      runtimeClassName: sysbox-runc
+      containers:
+      - name: {{ .Values.dind.deploy.container.name }}
+        image: {{ .Values.dind.deploy.container.name }}
+        imagePullPolicy: {{ .Values.dind.deploy.container.pullPolicy }}
+        command: ["/azp/start.sh"]
+        resources:
+            {{- toYaml .Values.dind.deploy.container.resources | nindent 12 }}
+        env:
+          - name: AZP_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: AZP_URL
+          - name: AZP_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: AZP_TOKEN
+          - name: AZP_POOL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: AZP_POOL
+{{ end }}
