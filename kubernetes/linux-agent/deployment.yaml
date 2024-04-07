@@ -6,7 +6,7 @@ metadata:
   labels:
     app: azsh-linux-agent
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: azsh-linux-agent
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: kubepodcreation
-        image: anvesh35/azsh-linux-agent:02062024
+        image: anvesh35/azsh-linux-agent:v04062024
         env:
           - name: AZP_URL
             valueFrom:
